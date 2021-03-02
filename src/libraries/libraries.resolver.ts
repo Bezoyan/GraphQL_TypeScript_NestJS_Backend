@@ -25,17 +25,15 @@ export class LibrariesResolver {
     ) {
       return this.libraryService.getLibrary(id);
     }
-
-    @Query(type => [Library])
-  async library(@Args('id') id: string) {
-    return this.libraryService.getLibrary(id);
-  }
-
-   @Query(type => [Book])
-    async books(@Parent() library: Library) {
-    const id  = library.id;
-    return this.bookService.getBook(id);
-  }
+    
+    //  @ResolveField('books')
+    //  @Query(type => Book)
+    //   async books(@Parent() library: Library) {
+    //   const {id}  = library;
+    //   let id = "6";
+    //   return this.bookService.getBook(id);
+    // }
+    
     @Mutation(type => [Library])
     async addLibrary(
       @Args('input') input: AddLibraryInput,

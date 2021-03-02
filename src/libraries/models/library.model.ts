@@ -11,5 +11,5 @@ export class Library {
   title: string;
 
   // @Field (type => [Book])
-  // books : [Book];
+  // books : Book[];
 }

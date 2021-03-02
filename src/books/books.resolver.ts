@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { BooksService } from './books.service';
-import { LibrariesService } from "../libraries/libraries.service";
 import { AddBookInput } from './dto/add-book.input';
 import { UpdateBookInput } from './dto/update-book.input';
 import { Book } from './models/book.model';
@@ -10,7 +9,6 @@ import { Book } from './models/book.model';
 export class BooksResolver {
   constructor(
     private readonly bookService: BooksService,
-    //private readonly libraryService: LibrariesService,
   ) {}
 
   @Query((type) => [Book])
@@ -20,9 +18,7 @@ export class BooksResolver {
 
   @Query((type) => Book)
   async getBook(@Args('id') id: string) {
-    // this.libraryService.getLibrary(id);
     return this.bookService.getBook(id);
-    //this.libraryService.getLibrary(id);
   }
   @Query((type) => Book)
   async getBookByTitle(@Args('search') title: string) {

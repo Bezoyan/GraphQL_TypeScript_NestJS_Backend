@@ -15,7 +15,4 @@ export class Book {
 
   @Field()
   libraryId: string;
-
-  // @Field (type => [Library])
-  // library : Library[];
 }

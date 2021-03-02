@@ -5,6 +5,7 @@ import { Library } from './models/library.model';
 import { LIBRARIES } from '../mocks/libraries.mock';
 import { AddLibraryInput } from './dto/add-library.input';
 import { UpdateLibraryInput } from './dto/update-library.input';
+//import { Book } from 'src/books/models/book.model';
 
 @Injectable()
 export class LibrariesService {
@@ -21,7 +22,7 @@ export class LibrariesService {
     const lastLibrary = this.libraries.slice(-1).pop();
     const library: Library = {
       id: lastLibrary.id + 1,
-      title: input.title,
+      title: input.title
     };
     this.libraries.push(library);
     return this.libraries;
