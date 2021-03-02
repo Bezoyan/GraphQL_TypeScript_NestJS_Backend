@@ -1,14 +1,17 @@
 /* eslint-disable prettier/prettier */
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { LibrariesService } from './libraries.service';
+import { BooksService } from '../books/books.service'
 import { AddLibraryInput } from './dto/add-library.input';
 import { UpdateLibraryInput } from './dto/update-library.input';
 import { Library } from './models/library.model';
+import {Book} from '../books/models/book.model';
 
-@Resolver('Libraries')
+@Resolver(() => Library)
 export class LibrariesResolver {
     constructor(
-      private readonly libraryService:  LibrariesService
+      private readonly libraryService:  LibrariesService,
+      private readonly bookService:  BooksService
     ) {}
   
     @Query(type => [Library])
@@ -22,7 +25,17 @@ export class LibrariesResolver {
     ) {
       return this.libraryService.getLibrary(id);
     }
-  
+
+    @Query(type => [Library])
+  async library(@Args('id') id: string) {
+    return this.libraryService.getLibrary(id);
+  }
+
+   @Query(type => [Book])
+    async books(@Parent() library: Library) {
+    const id  = library.id;
+    return this.bookService.getBook(id);
+  }
     @Mutation(type => [Library])
     async addLibrary(
       @Args('input') input: AddLibraryInput,
@@ -30,7 +43,7 @@ export class LibrariesResolver {
       return this.libraryService.addLibrary(input);
     }
   
-    @Mutation(type => Library)
+    @Mutation(type => [Library])
     async updateLibrary(
       @Args('input') input: UpdateLibraryInput,
     ) {

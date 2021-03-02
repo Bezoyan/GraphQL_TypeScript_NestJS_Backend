@@ -1,21 +1,33 @@
+/* eslint-disable prettier/prettier */
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { BooksService } from './books.service';
+import { LibrariesService } from "../libraries/libraries.service";
 import { AddBookInput } from './dto/add-book.input';
 import { UpdateBookInput } from './dto/update-book.input';
 import { Book } from './models/book.model';
 
 @Resolver('Books')
 export class BooksResolver {
-  constructor(private readonly bookService: BooksService) {}
+  constructor(
+    private readonly bookService: BooksService,
+    //private readonly libraryService: LibrariesService,
+  ) {}
 
   @Query((type) => [Book])
-  async getLibraries() {
+  async getBooks() {
     return this.bookService.getBooks();
   }
 
   @Query((type) => Book)
   async getBook(@Args('id') id: string) {
+    // this.libraryService.getLibrary(id);
     return this.bookService.getBook(id);
+    //this.libraryService.getLibrary(id);
+  }
+  @Query((type) => Book)
+  async getBookByTitle(@Args('search') title: string) {
+
+    return this.bookService.getBookByTitile(title);
   }
 
   @Mutation((type) => [Book])
@@ -23,13 +35,13 @@ export class BooksResolver {
     return this.bookService.addBook(input);
   }
 
-  @Mutation((type) => Book)
-  async updateLibrary(@Args('input') input: UpdateBookInput) {
+  @Mutation((type) => [Book])
+  async updateBook(@Args('input') input: UpdateBookInput) {
     return this.bookService.updateBook(input);
   }
 
   @Mutation((type) => [Book])
-  async deleteLibrary(@Args('id') id: string) {
+  async deleteBook(@Args('id') id: string) {
     return this.bookService.deleteBook(id);
   }
 }

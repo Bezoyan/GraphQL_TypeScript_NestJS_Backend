@@ -13,6 +13,9 @@ export class Book {
   @Field()
   createdDate: string;
 
-  @Field( type => [Library])
-  libraryId: Library['id'];
+  @Field()
+  libraryId: string;
+
+  // @Field (type => [Library])
+  // library : Library[];
 }

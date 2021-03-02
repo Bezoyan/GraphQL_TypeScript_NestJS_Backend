@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Book } from "../../books/models/book.model";
 
 @ObjectType()
 export class Library {
@@ -8,4 +9,7 @@ export class Library {
 
   @Field()
   title: string;
+
+  // @Field (type => [Book])
+  // books : [Book];
 }

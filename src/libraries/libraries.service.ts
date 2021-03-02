@@ -28,18 +28,15 @@ export class LibrariesService {
   }
 
   async updateLibrary(input: UpdateLibraryInput): Promise<Library[]> {
-    const updateLibrary = this.libraries.find((item) => {
+    const updatedLibrary = this.libraries.find((item) => {
        if (item.id === input.id) {
-        const library: Library = {
-          id: item.id,
-          title: input.title,
-      }
-      console.log(library);
-       return library
+       
+         item.title = input.title;
+         return item;
        }
     });
 
-    return;
+    return [updatedLibrary];
   }
 
   deleteLibrary(id: string): Library[] {
